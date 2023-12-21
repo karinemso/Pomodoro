@@ -10,7 +10,7 @@
 <body>
     <style>
         body {
-            background-color: purple;
+            background-color: red;
             color: white;
             font-family: Helvetica;
             font-weight: bold;
@@ -429,7 +429,7 @@
 
                      
 
-                            if (timeLeft.innerText == '00:00') {
+                            if (timeDifference <=500) {
                                 timerLabel.innerText = 'Break'
                                 timerOn = false
                                 timerType = 'break'
@@ -474,7 +474,7 @@
                             newMinutesBreak = newMinutesBreak.toString().padStart(2, '0');
 
 
-                            if (timeLeft.innerText == '00:00') {
+                            if (timeDifferenceBreak <=500) {
                                 timerLabel.innerText = 'Session'
                                 timerOn = false
                                 timerType = 'break'
