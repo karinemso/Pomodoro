@@ -287,6 +287,7 @@
             // startStop.addEventListener('click', startTimer)
             
           
+          
             let now
             let then
             let timerInterval = null
@@ -383,8 +384,6 @@
                 timerLabel.innerText = 'Session'
                 if (timerType == 'session') {
                     timeLeft.innerText = `${sessionValue.toString().padStart(2, '0')}:00`
-                } else {
-                    timeLeft.innerText = `${breakValue.toString().padStart(2, '0')}:00`
                 }
             }
 
@@ -407,7 +406,6 @@
 
                 switch (timerType) {
                     case 'session':
-                    clearInterval(timerInterval)
                         timerLabel.innerText = 'Session'
 
                         let minutes = parseInt(timeLeft.innerText.split(':')[0])
@@ -430,7 +428,7 @@
                                 timerType = 'break'
                                 beep.play()
                                 clearInterval(timerInterval);
-                                timeLeft.innerText = `${breakValue.toString().padStart(2, '0')}:00`
+                                timeLeft.innerText = `${breakLength.innerText.toString().padStart(2, '0')}:00`
                                 startTimer()
 
                                 
@@ -446,7 +444,6 @@
                         }, 1000)
                         break
                     case 'break':
-                    clearInterval(timerInterval)
                         timerLabel.innerText = 'Break'
 
                         now = new Date(Date.now()).getTime()
@@ -471,7 +468,7 @@
 
                                   beep.play()
                                 timerLabel.innerText = 'Session'
-                                timeLeft.innerText = `${sessionValue.toString().padStart(2, '0')}:00`
+                                timeLeft.innerText = `${sessionLength.innerText.toString().padStart(2, '0')}:00`
                                 timerOn = false
                                 timerType = 'break'
 
