@@ -416,7 +416,7 @@
                         timerInterval = setInterval(() => {
                             let currentTime = new Date().getTime();
                             let timeDifference = then - currentTime;
-                            if (timeDifference < 800) {
+                            if (timeDifference < 1000) {
                                 timerLabel.innerText = 'Session'
 
                                 beep.play()
@@ -462,7 +462,7 @@
 
                             let currentTimeBreak = new Date().getTime();
                             let timeDifferenceBreak = then - currentTimeBreak;
-                            if (timeDifferenceBreak < 800) {
+                            if (timeDifferenceBreak < 1000) {
                                 timerLabel.innerText = 'Session'
 
                                 beep.play()
