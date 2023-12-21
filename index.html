@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+</head>
+
+<body>
+    <style>
+        body {
+            background-color: purple;
+            color: white;
+            font-family: Helvetica;
+            font-weight: bold;
+            font-size: 2em;
+        }
+
+
+
+        .container {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+        }
+
+
+        button {
+            font-size: .8em;
+            min-width: 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #pomodoro {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: .5em;
+        }
+
+
+        #time-left {
+            font-size: 2em;
+            text-align: center;
+        }
+    </style>
+
+    <div class="container">
+        <div id="pomodoro">
+            <div>
+
+                <div id="session-label">SESSION <span id="session-length">25</span> <button
+                        id="session-increment">+</button>
+                    <button id="session-decrement">-</button>
+                </div>
+                <div id="break-label">BREAK <span id="break-length">5</span> <button type='button'
+                        id="break-increment">+</button>
+                    <button id="break-decrement">-</button>
+                </div>
+                <audio src="https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/sounds/bell_ring.ogg"
+                    id='beep'></audio>
+
+
+
+
+            </div>
+
+            <div id="timer-label">Session</div>
+            <div id="time-left">25:00</div>
+            <button id="start_stop">START</button>
+            <button id="reset">RESET</button>
+        </div>
+
+
+        <script>
+
+            // let now
+            // let then
+            // let timerInterval = null
+            // let timerOn = false
+            // let timerType = 'session'
+
+
+            // let beep = document.querySelector('#beep')
+            // let breakValue = 5
+            // let breakLength = document.querySelector('#break-length')
+            // let breakIncrement = document.querySelector('#break-increment')
+            // let breakDecrement = document.querySelector('#break-decrement')
+
+
+            // let sessionValue = 25
+            // let sessionLength = document.querySelector('#session-length')
+            // let sessionIncrement = document.querySelector('#session-increment')
+            // let sessionDecrement = document.querySelector('#session-decrement')
+
+            // let timerLabel = document.querySelector('#timer-label')
+            // let timeLeft = document.querySelector('#time-left')
+            // let startStop = document.querySelector('#start_stop')
+            // let reset = document.querySelector('#reset')
+
+
+
+
+            // function increment(target) {
+            //     if (parseInt(target.innerText) + 1 > 60) {
+
+            //         return
+            //     }
+
+            //     switch (target.id) {
+            //         case 'break-length':
+            //             breakValue += 1
+            //             breakLength.innerText = breakValue
+            //             if (timerType == 'break') {
+            //                 timeLeft.innerText = `${breakValue}:00`
+            //             }
+            //             break
+            //         case 'session-length':
+            //             sessionValue += 1
+            //             sessionLength.innerText = sessionValue
+            //             if (timerType == 'session') {
+            //                 timeLeft.innerText = `${sessionValue}:00`
+            //             }
+            //             break
+            //     }
+
+            // }
+
+            // sessionIncrement.addEventListener('click', () => increment(sessionLength))
+            // breakIncrement.addEventListener('click', () => increment(breakLength))
+
+
+            // function decrement(target) {
+            //     if (parseInt(target.innerText) - 1 <= 0) {
+            //         return
+            //     }
+
+            //     switch (target.id) {
+            //         case 'break-length':
+            //             breakValue -= 1
+            //             breakLength.innerText = breakValue
+            //             if (timerType == 'break') {
+            //                 timeLeft.innerText = `${breakValue}:00`
+            //             }
+            //             break
+            //         case 'session-length':
+            //             sessionValue -= 1
+            //             sessionLength.innerText = sessionValue
+            //             if (timerType == 'session') {
+            //                 timeLeft.innerText = `${sessionValue}:00`
+            //             }
+            //             break
+            //     }
+
+            // }
+
+            // sessionDecrement.addEventListener('click', () => decrement(sessionLength))
+            // breakDecrement.addEventListener('click', () => decrement(breakLength))
+
+            // function resetValues() {
+            //     timerOn = false
+            //     sessionValue = 25;
+            //     breakValue = 5;
+            //     breakLength.innerText = breakValue
+            //     sessionLength.innerText = sessionValue
+            //     if (timerInterval) {
+            //         clearInterval(timerInterval)
+            //     }
+            //     timerType = 'session'
+            //     timerLabel.innerText = 'Session'
+            //     if (timerType == 'session') {
+            //         timeLeft.innerText = `${sessionValue.toString().padStart(2, '0')}:00`
+            //     }
+            // }
+
+            // reset.addEventListener('click', resetValues)
+
+
+            // function startTimer() {
+            //     beep.pause()
+            //     beep.currentTime = 0
+            //     clearInterval(timerInterval)
+            //     if (!timerOn) {
+
+            //         now = new Date(Date.now()).getTime()
+            //         timerOn = true
+            //     } else {
+            //         timerOn = false
+
+            //         return
+            //     }
+
+            //     switch (timerType) {
+            //         case 'session':
+            //             timerLabel.innerText = 'Session'
+
+            //             let minutes = parseInt(timeLeft.innerText.split(':')[0])
+            //             let seconds = parseInt(timeLeft.innerText.split(':')[1])
+            //             then = new Date(now + (minutes * 60000) + (seconds * 1000)).getTime()
+
+            //             timerInterval = setInterval(() => {
+            //                 let currentTime = new Date().getTime();
+            //                 let timeDifference = then - currentTime;
+
+            //                 let newMinutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+            //                 let newSeconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+            //                 if (newMinutes + newSeconds == 0 || Math.floor(timeDifference / 60) <= 0) {
+            //                     beep.play()
+            //                     timerLabel.innerText = 'Break'
+            //                     timeLeft.innerText = `${breakLength.innerText.toString().padStart(2, '0')}:00`
+            //                 }
+            //                 newSeconds = newSeconds.toString().padStart(2, '0');
+            //                 newMinutes = newMinutes.toString().padStart(2, '0');
+            //                 if (Math.floor(timeDifference / 60) <= 0) {
+            //                     timerLabel.innerText = 'Break'
+            //                     timeLeft.innerText = `00:00`;
+
+            //                     timerOn = false
+            //                     timerType = 'break'
+            //                     beep.play()
+            //                     clearInterval(timerInterval);
+
+            //                     startTimer()
+
+            //                     timeLeft.innerText = `${breakLength.innerText.toString().padStart(2, '0')}:00`
+            //                     return
+            //                 }
+
+            //                 timeLeft.innerText = `${newMinutes}:${newSeconds}`;
+
+
+
+
+
+            //             }, 1000)
+            //             break
+            //         case 'break':
+            //             timerLabel.innerText = 'Break'
+
+            //             now = new Date(Date.now()).getTime()
+            //             let minutesBreak = parseInt(timeLeft.innerText.split(':')[0])
+            //             let secondsBreak = parseInt(timeLeft.innerText.split(':')[1])
+            //             then = new Date(now + (minutesBreak * 60000) + (secondsBreak * 1000)).getTime()
+
+            //             timerInterval = setInterval(() => {
+
+            //                 let currentTimeBreak = new Date().getTime();
+            //                 let timeDifferenceBreak = then - currentTimeBreak;
+
+            //                 let newMinutesBreak = Math.floor((timeDifferenceBreak % (1000 * 60 * 60)) / (1000 * 60));
+            //                 let newSecondsBreak = Math.floor((timeDifferenceBreak % (1000 * 60)) / 1000);
+            //                 if (newMinutesBreak + newSecondsBreak == 0 || Math.floor(timeDifferenceBreak / 60) <= 0) {
+            //                     beep.play()
+            //                     timerLabel.innerText = 'Session'
+            //                     timeLeft.innerText = `${sessionLength.innerText.toString().padStart(2, '0')}:00`
+            //                 }
+            //                 newSecondsBreak = newSecondsBreak.toString().padStart(2, '0');
+            //                 newMinutesBreak = newMinutesBreak.toString().padStart(2, '0');
+
+
+            //                 if (Math.floor(timeDifferenceBreak / 60) <= 0) {
+            //                     timerLabel.innerText = 'Session'
+
+
+            //                     timerOn = false
+            //                     timerType = 'break'
+
+            //                     clearInterval(timerInterval);
+
+            //                     startTimer()
+
+
+            //                     return
+            //                 }
+
+            //                 timeLeft.innerText = `${newMinutesBreak}:${newSecondsBreak}`;
+
+            //             }, 1000)
+            //             break
+
+            //     }
+            // }
+
+            // startStop.addEventListener('click', startTimer)
+            
+          
+            let now
+            let then
+            let timerInterval = null
+            let timerOn = false
+            let timerType = 'session'
+
+
+            let beep = document.querySelector('#beep')
+            let breakValue = 5
+            let breakLength = document.querySelector('#break-length')
+            let breakIncrement = document.querySelector('#break-increment')
+            let breakDecrement = document.querySelector('#break-decrement')
+
+
+            let sessionValue = 25
+            let sessionLength = document.querySelector('#session-length')
+            let sessionIncrement = document.querySelector('#session-increment')
+            let sessionDecrement = document.querySelector('#session-decrement')
+
+            let timerLabel = document.querySelector('#timer-label')
+            let timeLeft = document.querySelector('#time-left')
+            let startStop = document.querySelector('#start_stop')
+            let reset = document.querySelector('#reset')
+
+
+
+
+            function increment(target) {
+                if (parseInt(target.innerText) + 1 > 60) {
+
+                    return
+                }
+
+                switch (target.id) {
+                    case 'break-length':
+                        breakValue += 1
+                        breakLength.innerText = breakValue
+                        if (timerType == 'break') {
+                            timeLeft.innerText = `${breakValue}:00`
+                        }
+                        break
+                    case 'session-length':
+                        sessionValue += 1
+                        sessionLength.innerText = sessionValue
+                        if (timerType == 'session') {
+                            timeLeft.innerText = `${sessionValue}:00`
+                        }
+                        break
+                }
+
+            }
+
+            sessionIncrement.addEventListener('click', () => increment(sessionLength))
+            breakIncrement.addEventListener('click', () => increment(breakLength))
+
+
+            function decrement(target) {
+                if (parseInt(target.innerText) - 1 <= 0) {
+                    return
+                }
+
+                switch (target.id) {
+                    case 'break-length':
+                        breakValue -= 1
+                        breakLength.innerText = breakValue
+                        if (timerType == 'break') {
+                            timeLeft.innerText = `${breakValue}:00`
+                        }
+                        break
+                    case 'session-length':
+                        sessionValue -= 1
+                        sessionLength.innerText = sessionValue
+                        if (timerType == 'session') {
+                            timeLeft.innerText = `${sessionValue}:00`
+                        }
+                        break
+                }
+
+            }
+
+            sessionDecrement.addEventListener('click', () => decrement(sessionLength))
+            breakDecrement.addEventListener('click', () => decrement(breakLength))
+
+            function resetValues() {
+                timerOn = false
+                sessionValue = 25;
+                breakValue = 5;
+                breakLength.innerText = breakValue
+                sessionLength.innerText = sessionValue
+                if (timerInterval) {
+                    clearInterval(timerInterval)
+                }
+                timerType = 'session'
+                timerLabel.innerText = 'Session'
+                if (timerType == 'session') {
+                    timeLeft.innerText = `${sessionValue.toString().padStart(2, '0')}:00`
+                } else {
+                    timeLeft.innerText = `${breakValue.toString().padStart(2, '0')}:00`
+                }
+            }
+
+            reset.addEventListener('click', resetValues)
+
+
+            function startTimer() {
+                beep.pause()
+                beep.currentTime = 0
+                clearInterval(timerInterval)
+                if (!timerOn) {
+
+                    now = new Date(Date.now()).getTime()
+                    timerOn = true
+                } else {
+                    timerOn = false
+
+                    return
+                }
+
+                switch (timerType) {
+                    case 'session':
+                    clearInterval(timerInterval)
+                        timerLabel.innerText = 'Session'
+
+                        let minutes = parseInt(timeLeft.innerText.split(':')[0])
+                        let seconds = parseInt(timeLeft.innerText.split(':')[1])
+                        then = new Date(now + (minutes * 60000) + (seconds * 1000)).getTime()
+
+                        timerInterval = setInterval(() => {
+                            let currentTime = new Date().getTime();
+                            let timeDifference = then - currentTime;
+
+                            let newMinutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                            let newSeconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+                           
+                            newSeconds = newSeconds.toString().padStart(2, '0');
+                            newMinutes = newMinutes.toString().padStart(2, '0');
+                              
+                            if (timeLeft.innerText == '00:00') {
+                                timerLabel.innerText = 'Break'
+                                timerOn = false
+                                timerType = 'break'
+                                beep.play()
+                                clearInterval(timerInterval);
+                                timeLeft.innerText = `${breakValue.toString().padStart(2, '0')}:00`
+                                startTimer()
+
+                                
+                                return
+                            }
+
+                       
+
+
+                             timeLeft.innerText = `${newMinutes}:${newSeconds}`;
+
+
+                        }, 1000)
+                        break
+                    case 'break':
+                    clearInterval(timerInterval)
+                        timerLabel.innerText = 'Break'
+
+                        now = new Date(Date.now()).getTime()
+                        let minutesBreak = parseInt(timeLeft.innerText.split(':')[0])
+                        let secondsBreak = parseInt(timeLeft.innerText.split(':')[1])
+                        then = new Date(now + (minutesBreak * 60000) + (secondsBreak * 1000)).getTime()
+
+                        timerInterval = setInterval(() => {
+
+                            let currentTimeBreak = new Date().getTime();
+                            let timeDifferenceBreak = then - currentTimeBreak;
+
+                            let newMinutesBreak = Math.floor((timeDifferenceBreak % (1000 * 60 * 60)) / (1000 * 60));
+                            let newSecondsBreak = Math.floor((timeDifferenceBreak % (1000 * 60)) / 1000);
+                           
+                            newSecondsBreak = newSecondsBreak.toString().padStart(2, '0');
+                            newMinutesBreak = newMinutesBreak.toString().padStart(2, '0');
+
+                             
+                            if (timeLeft.innerText == '00:00') {
+                                timerLabel.innerText = 'Session'
+
+                                  beep.play()
+                                timerLabel.innerText = 'Session'
+                                timeLeft.innerText = `${sessionValue.toString().padStart(2, '0')}:00`
+                                timerOn = false
+                                timerType = 'break'
+
+                                clearInterval(timerInterval);
+
+                                startTimer()
+
+
+                                return
+                            }
+
+                          
+                           timeLeft.innerText = `${newMinutesBreak}:${newSecondsBreak}`;
+                        }, 1000)
+                        break
+
+                }
+            }
+
+            startStop.addEventListener('click', startTimer)
+        </script>
+        <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+</body>
+
+</html>
