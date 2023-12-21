@@ -372,6 +372,8 @@
             breakDecrement.addEventListener('click', () => decrement(breakLength))
 
             function resetValues() {
+                beep.pause()
+                beep.currentTime = 0
                 timerOn = false
                 sessionValue = 25;
                 breakValue = 5;
@@ -391,7 +393,6 @@
 
 
             function startTimer() {
-                beep.pause()
                 beep.currentTime = 0
                 clearInterval(timerInterval)
                 if (!timerOn) {
@@ -421,7 +422,9 @@
                            
                             newSeconds = newSeconds.toString().padStart(2, '0');
                             newMinutes = newMinutes.toString().padStart(2, '0');
-                              
+
+                           timeLeft.innerText = `${newMinutes}:${newSeconds}`;   
+
                             if (timeLeft.innerText == '00:00') {
                                 timerLabel.innerText = 'Break'
                                 timerOn = false
@@ -438,7 +441,7 @@
                        
 
 
-                             timeLeft.innerText = `${newMinutes}:${newSeconds}`;
+                             
 
 
                         }, 1000)
@@ -462,7 +465,7 @@
                             newSecondsBreak = newSecondsBreak.toString().padStart(2, '0');
                             newMinutesBreak = newMinutesBreak.toString().padStart(2, '0');
 
-                             
+                                   timeLeft.innerText = `${newMinutesBreak}:${newSecondsBreak}`;
                             if (timeLeft.innerText == '00:00') {
                                 timerLabel.innerText = 'Session'
 
@@ -481,7 +484,7 @@
                             }
 
                           
-                           timeLeft.innerText = `${newMinutesBreak}:${newSecondsBreak}`;
+                     
                         }, 1000)
                         break
 
