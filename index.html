@@ -285,9 +285,9 @@
             // }
 
             // startStop.addEventListener('click', startTimer)
-            
-          
-          
+
+
+
             let now
             let then
             let timerInterval = null
@@ -416,14 +416,18 @@
                         timerInterval = setInterval(() => {
                             let currentTime = new Date().getTime();
                             let timeDifference = then - currentTime;
+                            if (timeDifference < 800) {
+                                timerLabel.innerText = 'Session'
 
+                                beep.play()
+                            }
                             let newMinutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
                             let newSeconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-                           
+
                             newSeconds = newSeconds.toString().padStart(2, '0');
                             newMinutes = newMinutes.toString().padStart(2, '0');
 
-                           timeLeft.innerText = `${newMinutes}:${newSeconds}`;   
+                            timeLeft.innerText = `${newMinutes}:${newSeconds}`;
 
                             if (timeLeft.innerText == '00:00') {
                                 timerLabel.innerText = 'Break'
@@ -434,14 +438,14 @@
                                 timeLeft.innerText = `${breakLength.innerText.toString().padStart(2, '0')}:00`
                                 startTimer()
 
-                                
+
                                 return
                             }
 
-                       
 
 
-                             
+
+
 
 
                         }, 1000)
@@ -458,18 +462,22 @@
 
                             let currentTimeBreak = new Date().getTime();
                             let timeDifferenceBreak = then - currentTimeBreak;
+                            if (timeDifferenceBreak < 800) {
+                                timerLabel.innerText = 'Session'
 
+                                beep.play()
+                            }
                             let newMinutesBreak = Math.floor((timeDifferenceBreak % (1000 * 60 * 60)) / (1000 * 60));
                             let newSecondsBreak = Math.floor((timeDifferenceBreak % (1000 * 60)) / 1000);
-                           
+
                             newSecondsBreak = newSecondsBreak.toString().padStart(2, '0');
                             newMinutesBreak = newMinutesBreak.toString().padStart(2, '0');
 
-                                   timeLeft.innerText = `${newMinutesBreak}:${newSecondsBreak}`;
+
                             if (timeLeft.innerText == '00:00') {
                                 timerLabel.innerText = 'Session'
 
-                                  beep.play()
+                                beep.play()
                                 timerLabel.innerText = 'Session'
                                 timeLeft.innerText = `${sessionLength.innerText.toString().padStart(2, '0')}:00`
                                 timerOn = false
@@ -482,9 +490,9 @@
 
                                 return
                             }
+                            timeLeft.innerText = `${newMinutesBreak}:${newSecondsBreak}`;
 
-                          
-                     
+
                         }, 1000)
                         break
 
