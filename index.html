@@ -427,7 +427,7 @@
                             newSeconds = newSeconds.toString().padStart(2, '0');
                             newMinutes = newMinutes.toString().padStart(2, '0');
 
-                            timeLeft.innerText = `${newMinutes}:${newSeconds}`;
+                     
 
                             if (timeLeft.innerText == '00:00') {
                                 timerLabel.innerText = 'Break'
@@ -442,7 +442,7 @@
                                 return
                             }
 
-
+       timeLeft.innerText = `${newMinutes}:${newSeconds}`;
 
 
 
