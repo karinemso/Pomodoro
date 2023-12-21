@@ -476,15 +476,11 @@
 
                             if (timeLeft.innerText == '00:00') {
                                 timerLabel.innerText = 'Session'
-
-                                beep.play()
-                                timerLabel.innerText = 'Session'
-                                timeLeft.innerText = `${sessionLength.innerText.toString().padStart(2, '0')}:00`
                                 timerOn = false
                                 timerType = 'break'
-
+                                beep.play()
+                                timeLeft.innerText = `${sessionLength.innerText.toString().padStart(2, '0')}:00`
                                 clearInterval(timerInterval);
-
                                 startTimer()
 
 
