@@ -10,7 +10,7 @@
 <body>
     <style>
         body {
-            background-color: red;
+            background-color: rgb(0, 136, 255);
             color: white;
             font-family: Helvetica;
             font-weight: bold;
@@ -416,7 +416,7 @@
                         timerInterval = setInterval(() => {
                             let currentTime = new Date().getTime();
                             let timeDifference = then - currentTime;
-                            if (timeDifference < 1000) {
+                            if (timeDifference <= 800) {
                                 timerLabel.innerText = 'Break'
 
                                 beep.play()
@@ -433,7 +433,7 @@
                                 timerLabel.innerText = 'Break'
                                 timerOn = false
                                 timerType = 'break'
-                                beep.play()
+                             
                                 clearInterval(timerInterval);
                                 timeLeft.innerText = `${breakLength.innerText.toString().padStart(2, '0')}:00`
                                 startTimer()
@@ -462,11 +462,7 @@
 
                             let currentTimeBreak = new Date().getTime();
                             let timeDifferenceBreak = then - currentTimeBreak;
-                            if (timeDifferenceBreak < 1500) {
-                                timerLabel.innerText = 'Session'
-
-                                beep.play()
-                            }
+                           
                             let newMinutesBreak = Math.floor((timeDifferenceBreak % (1000 * 60 * 60)) / (1000 * 60));
                             let newSecondsBreak = Math.floor((timeDifferenceBreak % (1000 * 60)) / 1000);
 
@@ -488,7 +484,11 @@
                             }
                             timeLeft.innerText = `${newMinutesBreak}:${newSecondsBreak}`;
 
+                            if (timeLeft.innerText = '00:00') {
+                                timerLabel.innerText = 'Session'
 
+                            
+                            }
                         }, 1000)
                         break
 
